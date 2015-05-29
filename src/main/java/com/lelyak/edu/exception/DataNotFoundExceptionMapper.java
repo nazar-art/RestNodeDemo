@@ -1,6 +1,7 @@
 package com.lelyak.edu.exception;
 
-import com.lelyak.model.ErrorMessage;
+
+import com.lelyak.edu.model.ErrorMessage;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;

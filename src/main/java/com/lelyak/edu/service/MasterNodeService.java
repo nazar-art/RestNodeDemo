@@ -20,7 +20,7 @@ public class MasterNodeService {
         // hard coded DB mock
         Map<Long, RuntimeNode> runtimeNodeMap = new HashMap<>();
         for (int i = 1; i < RUNTIME_NODE_COUNT; i++) {
-            RuntimeNode runtimeNode = new RuntimeNode(i, "node # " + i);
+            RuntimeNode runtimeNode = new RuntimeNode(i, "node #" + i);
             runtimeNodeMap.put((long) i, runtimeNode);
         }
         masterNode.setRuntimeNodes(runtimeNodeMap);

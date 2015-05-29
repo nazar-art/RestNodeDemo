@@ -6,6 +6,7 @@
 
     <groupId>com.lelyak.edu</groupId>
     <artifactId>master-node</artifactId>
+    <packaging>war</packaging>
     <version>0.0.1</version>
     <name>RestNodeDemo</name>
 
@@ -55,6 +56,25 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <packagingExcludes>WEB-INF/web.xml</packagingExcludes>
+                    <warName>MasterNodeDemo</warName>
                 </configuration>
             </plugin>
         </plugins>

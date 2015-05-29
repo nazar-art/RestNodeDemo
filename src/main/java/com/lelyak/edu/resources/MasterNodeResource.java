@@ -11,7 +11,11 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class MasterNodeResource {
+
     private MasterNodeService masterNodeService = new MasterNodeService();
+    // todo add possibility for few master nodes exist:
+    // http://localhost:8080/webapi/master/1/runtime    => all runtime nodes
+    // http://localhost:8080/webapi/master/1/runtime/2  => second runtime node
 
     @GET
     public List<RuntimeNode> getAllRuntimeNodes() {
