@@ -1,5 +1,7 @@
 package com.lelyak.edu.model;
 
+import com.lelyak.edu.model.enums.RuntimeNodeCondition;
+
 import java.io.File;
 import java.util.List;
 
@@ -7,15 +9,15 @@ public class RuntimeNode {
 
     private long id;
     private String name;
+    private RuntimeNodeCondition nodeCondition = RuntimeNodeCondition.STOPPPED;
     private List<File> files;
 
     public RuntimeNode() {
     }
 
-    public RuntimeNode(long id, String name, List<File> files) {
+    public RuntimeNode(long id, String name) {
         this.id = id;
         this.name = name;
-        this.files = files;
     }
 
     public long getId() {
@@ -40,5 +42,13 @@ public class RuntimeNode {
 
     public void setFiles(List<File> files) {
         this.files = files;
+    }
+
+    public RuntimeNodeCondition getNodeCondition() {
+        return nodeCondition;
+    }
+
+    public void setNodeCondition(RuntimeNodeCondition nodeCondition) {
+        this.nodeCondition = nodeCondition;
     }
 }
