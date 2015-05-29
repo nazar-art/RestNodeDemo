@@ -1,6 +1,6 @@
 package com.lelyak.edu.service;
 
-import com.lelyak.edu.database.DatabaseMock;
+import com.lelyak.edu.database.DatabaseMockClass;
 import com.lelyak.edu.exception.DataNotFoundException;
 import com.lelyak.edu.model.MasterNode;
 import com.lelyak.edu.model.RuntimeNode;
@@ -14,7 +14,7 @@ public class MasterNodeService {
 
     public static final int RUNTIME_NODE_COUNT = 32;
 
-    private MasterNode masterNode = DatabaseMock.getMasterNode();
+    private MasterNode masterNode = DatabaseMockClass.getMasterNode();
 
     public MasterNodeService() {
         // hard coded DB mock
