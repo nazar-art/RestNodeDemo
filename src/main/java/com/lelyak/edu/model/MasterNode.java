@@ -32,6 +32,7 @@ public class MasterNode {
         resourceStats = new NodeStats(runtimeNodes);
     }
 
+    @XmlTransient
     public String getName() {
         return name;
     }
@@ -57,13 +58,13 @@ public class MasterNode {
         this.files = files;
     }
 
-//    @XmlTransient
+    @XmlTransient
     public Map<Long, RuntimeNode> getRuntimeNodes() {
         return runtimeNodes;
     }
 
     public void setRuntimeNodes(Map<Long, RuntimeNode> runtimeNodes) {
-        this.runtimeNodes = runtimeNodes;
+        MasterNode.runtimeNodes = runtimeNodes;
     }
 
     public void setAppStatus(String appStatus) {
