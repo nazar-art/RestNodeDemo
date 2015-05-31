@@ -1,11 +1,11 @@
 package com.lelyak.edu.model;
 
-import com.lelyak.edu.model.enums.ManagementNodeAction;
+import com.lelyak.edu.database.DatabaseMockClass;
+import com.lelyak.edu.model.enums.NodeAction;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,19 +14,22 @@ public class MasterNode {
 
     private String name;
 
-    private Map<Long, RuntimeNode> runtimeNodes = new HashMap<>();
+    private static Map<Long, RuntimeNode> runtimeNodes = DatabaseMockClass.runtimeNodesMock();
 
-    private ManagementNodeAction managementNodeAction = ManagementNodeAction.STOP;
+    private String appStatus;
+
+    private NodeStats resourceStats;
 
     private List<File> files;
 
     public MasterNode() {
     }
 
-    public MasterNode(String name, ManagementNodeAction managementNodeAction, List<File> files) {
+    public MasterNode(String name, List<File> files) {
         this.name = name;
-        this.managementNodeAction = managementNodeAction;
+        this.appStatus = NodeAction.START.getActionValue();
         this.files = files;
+        resourceStats = new NodeStats(runtimeNodes);
     }
 
     public String getName() {
@@ -37,14 +40,15 @@ public class MasterNode {
         this.name = name;
     }
 
-    public ManagementNodeAction getManagementNodeAction() {
-        return managementNodeAction;
+    public String getAppStatus() {
+        return appStatus;
     }
 
-    public void setManagementNodeAction(ManagementNodeAction managementNodeAction) {
-        this.managementNodeAction = managementNodeAction;
+    public void setAppStatus(NodeAction appStatus) {
+        this.appStatus = appStatus.getActionValue();
     }
 
+    @XmlTransient
     public List<File> getFiles() {
         return files;
     }
@@ -53,12 +57,24 @@ public class MasterNode {
         this.files = files;
     }
 
-    @XmlTransient
+//    @XmlTransient
     public Map<Long, RuntimeNode> getRuntimeNodes() {
         return runtimeNodes;
     }
 
     public void setRuntimeNodes(Map<Long, RuntimeNode> runtimeNodes) {
         this.runtimeNodes = runtimeNodes;
+    }
+
+    public void setAppStatus(String appStatus) {
+        this.appStatus = appStatus;
+    }
+
+    public NodeStats getResourceStats() {
+        return resourceStats;
+    }
+
+    public void setResourceStats(NodeStats resourceStats) {
+        this.resourceStats = resourceStats;
     }
 }

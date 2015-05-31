@@ -1,8 +1,7 @@
 <html>
 <body>
     <h2>Welcome to Jersey RESTful Master Node Web Application !!!</h2>
-    <p><a href="webapi/myresource">Jersey resource</a>
-    <p>Visit <a href="http://jersey.java.net">Project Jersey website</a>
-    for more information on Jersey!
+    <p><a href="webapi/master">Master Node Demo response</a>
+    <p><a href="webapi/master/1/runtime">Runtime Nodes response for Master Node</a>
 </body>
 </html>

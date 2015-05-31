@@ -4,37 +4,47 @@ import com.lelyak.edu.database.DatabaseMockClass;
 import com.lelyak.edu.exception.DataNotFoundException;
 import com.lelyak.edu.model.MasterNode;
 import com.lelyak.edu.model.RuntimeNode;
+import com.lelyak.edu.model.enums.NodeAction;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class MasterNodeService {
 
-    public static final int RUNTIME_NODE_COUNT = 32;
+    private Map<Long, MasterNode> masterNodes = DatabaseMockClass.getMasterNodes();
 
-    private MasterNode masterNode = DatabaseMockClass.getMasterNode();
-
-    public MasterNodeService() {
-        // hard coded DB mock
-        Map<Long, RuntimeNode> runtimeNodeMap = new HashMap<>();
-        for (int i = 1; i < RUNTIME_NODE_COUNT; i++) {
-            RuntimeNode runtimeNode = new RuntimeNode(i, "node #" + i);
-            runtimeNodeMap.put((long) i, runtimeNode);
-        }
-        masterNode.setRuntimeNodes(runtimeNodeMap);
+    public List<MasterNode> getAllMasterNodes() {
+        return new ArrayList<>(masterNodes.values());
     }
 
-    public List<RuntimeNode> getAllRuntimeNodes() {
-        return new ArrayList<>(masterNode.getRuntimeNodes().values());
+    public MasterNode getMasterNode(long masterNodeId) {
+        MasterNode masterNode = masterNodes.get(masterNodeId);
+        if (masterNode == null) {
+            throw new DataNotFoundException(masterNodeId, "master");
+        }
+        return masterNode;
     }
 
-    public RuntimeNode getRuntimeNode(long id) {
-        RuntimeNode runtimeNode = masterNode.getRuntimeNodes().get(id);
-        if (runtimeNode == null) {
-            throw new DataNotFoundException("node with id: " + id + " not found");
+    public MasterNode flipNodeActions(MasterNode masterNode) {
+        String currStatus = masterNode.getAppStatus();
+        if (currStatus.equals(NodeAction.STOP.getActionValue())) {
+            masterNode.setAppStatus(NodeAction.START);
+            activateRuntimeNodes(masterNode, true);
+        } else {
+            masterNode.setAppStatus(NodeAction.STOP);
+            activateRuntimeNodes(masterNode, false);
         }
-        return runtimeNode;
+        return masterNode;
+    }
+
+    private void activateRuntimeNodes(MasterNode masterNode, boolean marker) {
+        for (RuntimeNode runtimeNode : masterNode.getRuntimeNodes().values()) {
+            if (marker) {
+                runtimeNode.setNodeCondition(NodeAction.START);
+            } else {
+                runtimeNode.setNodeCondition(NodeAction.STOP);
+            }
+        }
     }
 }

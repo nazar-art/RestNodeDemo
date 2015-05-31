@@ -1,6 +1,6 @@
 package com.lelyak.edu.resources;
 
-import com.lelyak.edu.model.RuntimeNode;
+import com.lelyak.edu.model.MasterNode;
 import com.lelyak.edu.service.MasterNodeService;
 
 import javax.ws.rs.*;
@@ -13,18 +13,29 @@ import java.util.List;
 public class MasterNodeResource {
 
     private MasterNodeService masterNodeService = new MasterNodeService();
-    // todo add possibility for few master nodes exist:
-    // http://localhost:8080/webapi/master/1/runtime    => all runtime nodes
-    // http://localhost:8080/webapi/master/1/runtime/2  => second runtime node
 
     @GET
-    public List<RuntimeNode> getAllRuntimeNodes() {
-        return masterNodeService.getAllRuntimeNodes();
+    public List<MasterNode> getAllMasterNodes() {
+        return masterNodeService.getAllMasterNodes();
     }
 
     @GET
-    @Path("/{runtimeNodeId}")
-    public RuntimeNode getRuntimeNode(@PathParam("runtimeNodeId") long id) {
-        return masterNodeService.getRuntimeNode(id);
+    @Path("/{masterNodeId}")
+    public MasterNode getRuntimeNode(@PathParam("masterNodeId") long id) {
+        return masterNodeService.getMasterNode(id);
+    }
+
+    @PUT
+    @Path("/{masterNodeId}")
+    public MasterNode updateMasterNode(@PathParam("masterNodeId") long masterNodeId) {
+        MasterNode masterNode = masterNodeService.getMasterNode(masterNodeId);
+        masterNodeService.flipNodeActions(masterNode);
+
+        return masterNode;
+    }
+
+    @Path("/{masterNodeId}/runtime")
+    public RuntimeNodeResource getRuntimeNodesResource(@PathParam("masterNodeId") long id) {
+        return new RuntimeNodeResource();
     }
 }

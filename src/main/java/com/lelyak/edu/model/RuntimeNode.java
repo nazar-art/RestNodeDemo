@@ -1,6 +1,6 @@
 package com.lelyak.edu.model;
 
-import com.lelyak.edu.model.enums.RuntimeNodeCondition;
+import com.lelyak.edu.model.enums.NodeAction;
 
 import java.io.File;
 import java.util.List;
@@ -9,7 +9,7 @@ public class RuntimeNode {
 
     private long id;
     private String name;
-    private RuntimeNodeCondition nodeCondition = RuntimeNodeCondition.STOPPPED;
+    private NodeAction nodeCondition = NodeAction.START;
     private List<File> files;
 
     public RuntimeNode() {
@@ -44,11 +44,11 @@ public class RuntimeNode {
         this.files = files;
     }
 
-    public RuntimeNodeCondition getNodeCondition() {
+    public NodeAction getNodeAction() {
         return nodeCondition;
     }
 
-    public void setNodeCondition(RuntimeNodeCondition nodeCondition) {
+    public void setNodeCondition(NodeAction nodeCondition) {
         this.nodeCondition = nodeCondition;
     }
 }

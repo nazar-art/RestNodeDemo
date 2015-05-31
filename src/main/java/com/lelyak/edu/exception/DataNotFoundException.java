@@ -1,26 +1,14 @@
 package com.lelyak.edu.exception;
 
+import com.lelyak.edu.utils.StringUtils;
+
 public class DataNotFoundException extends RuntimeException {
 
     private static final long serialVersionUID = 0L;
 
-    public DataNotFoundException() {
-        super();
-    }
+    private static final String DATA_NOT_FOUND_EXCEPTION = "node with id: %1$s not found for %2$s node";
 
-    public DataNotFoundException(String message) {
-        super(message);
-    }
-
-    public DataNotFoundException(Throwable cause) {
-        super(cause);
-    }
-
-    public DataNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    protected DataNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    public DataNotFoundException(long id, String nodeType) {
+        super(StringUtils.appendStrings(DATA_NOT_FOUND_EXCEPTION, String.valueOf(id), nodeType));
     }
 }
