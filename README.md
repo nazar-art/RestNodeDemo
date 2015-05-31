@@ -43,14 +43,3 @@ On master and runtime nodes some kind of `REST API` server and client are insta
         "upActive":4,       
         "upInactive":0}}     
 
-================
-        
-For running you have to create Configuration for Tomcat 7 (I am using Intellij IDE):
-
-    http://localhost:8080/
-    
-And after deploying project to Tomcat, you able to use `Postman` browser extension for checking services.
-
-For accessing master node enter next url: 
-    
-    http://localhost:8080/webapi/master
