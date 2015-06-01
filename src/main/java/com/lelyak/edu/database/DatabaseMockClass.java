@@ -2,7 +2,7 @@ package com.lelyak.edu.database;
 
 import com.lelyak.edu.model.MasterNode;
 import com.lelyak.edu.model.RuntimeNode;
-import org.apache.log4j.Logger;
+import com.lelyak.edu.utils.logger.Logger;
 
 import java.io.File;
 import java.util.Arrays;
@@ -15,8 +15,6 @@ public final class DatabaseMockClass {
     private DatabaseMockClass() {
     }
 
-    private static final Logger logger = Logger.getLogger(DatabaseMockClass.class);
-
     public static final int RUNTIME_NODE_COUNT = 33;
 
     private static Map<Long, MasterNode> masterNodes = new HashMap<>();
@@ -27,12 +25,12 @@ public final class DatabaseMockClass {
 
     static {
         // hard coded DB mock
-        logger.info("start master node initialization");
+        Logger.operation("start master node initialization");
         List<File> runNodesList = Arrays.asList(new File(MANAGE_NODE_FIRST_FILE_PATH));
         MasterNode firstMasterNode = new MasterNode("#1 master node", runNodesList);
         //
         masterNodes.put(MASTER_NODE_KEY, firstMasterNode);
-        logger.info("first master node created");
+        Logger.operation("first master node created");
     }
 
     public static Map<Long, RuntimeNode> runtimeNodesMock() {
@@ -51,7 +49,7 @@ public final class DatabaseMockClass {
     public static Map<Long, RuntimeNode> getRuntimeNodes() {
         Map<Long, RuntimeNode> runtimeNodes = masterNodes.get(MASTER_NODE_KEY).getRuntimeNodes();
         if (runtimeNodes == null) {
-            logger.error(RUNTIME_NODES_EXCEPTION);
+            Logger.error(RUNTIME_NODES_EXCEPTION);
             throw new RuntimeException(RUNTIME_NODES_EXCEPTION);
         }
         return runtimeNodes;
@@ -60,7 +58,7 @@ public final class DatabaseMockClass {
     public static Map<Long, RuntimeNode> getRuntimeNodes(long nodeId) {
         Map<Long, RuntimeNode> runtimeNodes = masterNodes.get(nodeId).getRuntimeNodes();
         if (runtimeNodes == null) {
-            logger.error(RUNTIME_NODES_EXCEPTION);
+            Logger.error(RUNTIME_NODES_EXCEPTION);
             throw new RuntimeException(RUNTIME_NODES_EXCEPTION);
         }
         return runtimeNodes;

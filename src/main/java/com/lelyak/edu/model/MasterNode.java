@@ -2,10 +2,12 @@ package com.lelyak.edu.model;
 
 import com.lelyak.edu.database.DatabaseMockClass;
 import com.lelyak.edu.model.enums.ApplicationStatus;
+import com.lelyak.edu.model.enums.NodeAction;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +32,15 @@ public class MasterNode {
         this.appStatus = ApplicationStatus.STARTED.getActionValue();
         this.files = files;
         resourceStats = new NodeStats(runtimeNodes);
+    }
+
+    public static NodeAction runtimeNodeAction() {
+        for (RuntimeNode node : runtimeNodes) {
+            if (node.getAction() != NodeAction.START) {
+                return NodeAction.STOP;
+            }
+        }
+        return NodeAction.START;
     }
 
     @XmlTransient
@@ -59,11 +70,11 @@ public class MasterNode {
     }
 
     @XmlTransient
-    public Map<Long, RuntimeNode> getRuntimeNodes() {
+    public static Map<Long, RuntimeNode> getRuntimeNodes() {
         return runtimeNodes;
     }
 
-    public void setRuntimeNodes(Map<Long, RuntimeNode> runtimeNodes) {
+    public static void setRuntimeNodes(Map<Long, RuntimeNode> runtimeNodes) {
         MasterNode.runtimeNodes = runtimeNodes;
     }
 

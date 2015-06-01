@@ -3,11 +3,13 @@ package com.lelyak.edu.model;
 import com.lelyak.edu.model.enums.NodeAction;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.Map;
 
 @XmlRootElement
 public class NodeStats {
 
+    private Map<Long, RuntimeNode> runtimeNodes;
     private int total;
     private int upActive;
     private int upInactive;
@@ -16,31 +18,37 @@ public class NodeStats {
     }
 
     public NodeStats(Map<Long, RuntimeNode> runtimeNodes) {
+        this.runtimeNodes = runtimeNodes;
         total = runtimeNodes.size();
-        upActive = activeRuntimeNodes(runtimeNodes);
+        upActive = countActiveNodes(runtimeNodes);
         upInactive = total - upActive;
     }
 
-    private int activeRuntimeNodes(Map<Long, RuntimeNode> runtimeNodes) {
-        int total = 0;
+    private int countActiveNodes(Map<Long, RuntimeNode> runtimeNodes) {
+        int result = 0;
         for (RuntimeNode node : runtimeNodes.values()) {
             if (node.getAction() == NodeAction.START) {
-                total = total + 1;
+                result = result + 1;
             }
         }
-        return total;
+        return result;
     }
 
     public int getTotal() {
-        return total;
+        return runtimeNodes.size();
     }
 
     public int getUpActive() {
-        return upActive;
+        return countActiveNodes(runtimeNodes);
     }
 
     public int getUpInactive() {
-        return upInactive;
+        return runtimeNodes.size() - countActiveNodes(runtimeNodes);
+    }
+
+    @XmlTransient
+    public Map<Long, RuntimeNode> getRuntimeNodes() {
+        return runtimeNodes;
     }
 
     public void setTotal(int total) {
@@ -53,5 +61,9 @@ public class NodeStats {
 
     public void setUpInactive(int upInactive) {
         this.upInactive = upInactive;
+    }
+
+    public void setRuntimeNodes(Map<Long, RuntimeNode> runtimeNodes) {
+        this.runtimeNodes = runtimeNodes;
     }
 }

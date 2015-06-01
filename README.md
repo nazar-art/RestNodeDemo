@@ -28,7 +28,7 @@ On master and runtime nodes some kind of `REST API` server and client are insta
         
     - response
         {"action":"stop",
-        "status":200,http://localhost:8080/webapi/myresource
+        "status":200,
         "response":{
         "message":"Stopping resources has triggered successfully"}}
 

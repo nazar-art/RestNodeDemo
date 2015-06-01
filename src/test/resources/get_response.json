@@ -1,0 +1,8 @@
+{
+    "appStatus": "stopped",
+    "resourceStats": {
+        "total": 32,
+        "upActive": 32,
+        "upInactive": 0
+    }
+}

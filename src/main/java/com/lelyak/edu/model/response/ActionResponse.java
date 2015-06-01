@@ -1,34 +1,33 @@
 package com.lelyak.edu.model.response;
 
+import com.lelyak.edu.model.MasterNode;
+import com.lelyak.edu.model.RuntimeNode;
 import com.lelyak.edu.model.enums.NodeAction;
 
+import java.util.Collection;
+
 public class ActionResponse {
-    private NodeAction action;
+    private String action;
+    // todo how to take response code from response
     private int status;
     private ResponseMessage response;
 
-    public class ResponseMessage {
-        private String message;
-
-        public String getMessage() {
-            if (action == NodeAction.STOP) {
-                message = "Stopping resources has triggered successfully";
-            } else if (action == NodeAction.START) {
-                message = "Starting resources has triggered successfully";
-            }
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
+    public ActionResponse() {
+        action = getRuntimeNodeAction();
+        response = new ResponseMessage();
     }
 
-    public NodeAction getAction() {
-        return action;
+    private String getRuntimeNodeAction() {
+        Collection<RuntimeNode> runtimeNodes = MasterNode.getRuntimeNodes().values();
+        NodeAction nodeAction = MasterNode.runtimeNodeAction();
+        return nodeAction.getActionValue();
     }
 
-    public void setAction(NodeAction action) {
+    public String getAction() {
+        return getRuntimeNodeAction();
+    }
+
+    public void setAction(String action) {
         this.action = action;
     }
 

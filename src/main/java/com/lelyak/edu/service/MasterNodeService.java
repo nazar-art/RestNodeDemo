@@ -6,6 +6,7 @@ import com.lelyak.edu.model.MasterNode;
 import com.lelyak.edu.model.RuntimeNode;
 import com.lelyak.edu.model.enums.ApplicationStatus;
 import com.lelyak.edu.model.enums.NodeAction;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 public class MasterNodeService {
 
+    private final static Logger logger = Logger.getLogger(MasterNodeService.class);
     private Map<Long, MasterNode> masterNodes = DatabaseMockClass.getMasterNodes();
 
     public List<MasterNode> getAllMasterNodes() {
@@ -37,11 +39,11 @@ public class MasterNodeService {
         switch (action) {
             case START:
                 masterNode.setAppStatus(ApplicationStatus.STOPPED);
-                activateRuntimeNodes(masterNode, false);
+                activateRuntimeNodes(masterNode, true);
                 break;
             case STOP:
                 masterNode.setAppStatus(ApplicationStatus.STARTED);
-                activateRuntimeNodes(masterNode, true);
+                activateRuntimeNodes(masterNode, false);
                 break;
             default:
                 throw new RuntimeException("Request node action has incorrect data: " + action);
@@ -58,11 +60,15 @@ public class MasterNodeService {
     }
 
     private void activateRuntimeNodes(MasterNode masterNode, boolean marker) {
+//        logger.info("Here is master node state: " + masterNode.getAppStatus());
         for (RuntimeNode runtimeNode : masterNode.getRuntimeNodes().values()) {
+//            logger.info("Here is runtime node state: " + runtimeNode.getAction());
             if (marker) {
                 runtimeNode.setAction(NodeAction.START);
+//                logger.info("Node state changed to: " + NodeAction.START);
             } else {
                 runtimeNode.setAction(NodeAction.STOP);
+//                logger.info("Node state changed to: " + NodeAction.STOP);
             }
         }
     }
