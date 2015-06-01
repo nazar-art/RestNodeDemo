@@ -2,6 +2,7 @@ package com.lelyak.edu.model;
 
 import com.lelyak.edu.model.enums.NodeAction;
 
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.File;
 import java.util.List;
 
@@ -9,7 +10,8 @@ public class RuntimeNode {
 
     private long id;
     private String name;
-    private NodeAction nodeCondition = NodeAction.START;
+//    private NodeAction action = NodeAction.START;
+    private String action = NodeAction.START.getActionValue();
     private List<File> files;
 
     public RuntimeNode() {
@@ -20,6 +22,7 @@ public class RuntimeNode {
         this.name = name;
     }
 
+    @XmlTransient
     public long getId() {
         return id;
     }
@@ -28,6 +31,7 @@ public class RuntimeNode {
         this.id = id;
     }
 
+    @XmlTransient
     public String getName() {
         return name;
     }
@@ -36,6 +40,7 @@ public class RuntimeNode {
         this.name = name;
     }
 
+    @XmlTransient
     public List<File> getFiles() {
         return files;
     }
@@ -44,11 +49,11 @@ public class RuntimeNode {
         this.files = files;
     }
 
-    public NodeAction getNodeAction() {
-        return nodeCondition;
+    public NodeAction getAction() {
+        return NodeAction.fromString(action);
     }
 
-    public void setNodeCondition(NodeAction nodeCondition) {
-        this.nodeCondition = nodeCondition;
+    public void setAction(NodeAction action) {
+        this.action = action.getActionValue();
     }
 }

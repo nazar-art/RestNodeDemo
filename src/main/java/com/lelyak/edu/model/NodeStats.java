@@ -24,7 +24,7 @@ public class NodeStats {
     private int activeRuntimeNodes(Map<Long, RuntimeNode> runtimeNodes) {
         int total = 0;
         for (RuntimeNode node : runtimeNodes.values()) {
-            if (node.getNodeAction() == NodeAction.START) {
+            if (node.getAction() == NodeAction.START) {
                 total = total + 1;
             }
         }

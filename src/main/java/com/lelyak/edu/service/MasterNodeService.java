@@ -4,6 +4,7 @@ import com.lelyak.edu.database.DatabaseMockClass;
 import com.lelyak.edu.exception.DataNotFoundException;
 import com.lelyak.edu.model.MasterNode;
 import com.lelyak.edu.model.RuntimeNode;
+import com.lelyak.edu.model.enums.ApplicationStatus;
 import com.lelyak.edu.model.enums.NodeAction;
 
 import java.util.ArrayList;
@@ -26,24 +27,42 @@ public class MasterNodeService {
         return masterNode;
     }
 
-    public MasterNode flipNodeActions(MasterNode masterNode) {
-        String currStatus = masterNode.getAppStatus();
-        if (currStatus.equals(NodeAction.STOP.getActionValue())) {
-            masterNode.setAppStatus(NodeAction.START);
+    public MasterNode flipNodeActions(MasterNode masterNode, NodeAction action) {
+        String currNodeAction = masterNode.getAppStatus();
+
+        if (currNodeAction.equalsIgnoreCase(action.getActionValue())) {
+            return masterNode;
+        }
+
+        switch (action) {
+            case START:
+                masterNode.setAppStatus(ApplicationStatus.STOPPED);
+                activateRuntimeNodes(masterNode, false);
+                break;
+            case STOP:
+                masterNode.setAppStatus(ApplicationStatus.STARTED);
+                activateRuntimeNodes(masterNode, true);
+                break;
+            default:
+                throw new RuntimeException("Request node action has incorrect data: " + action);
+        }
+
+        /*if (currNodeAction.equals(NodeAction.STOPPED.getActionValue())) {
+            masterNode.setAppStatus(NodeAction.STARTED);
             activateRuntimeNodes(masterNode, true);
         } else {
-            masterNode.setAppStatus(NodeAction.STOP);
+            masterNode.setAppStatus(NodeAction.STOPPED);
             activateRuntimeNodes(masterNode, false);
-        }
+        }*/
         return masterNode;
     }
 
     private void activateRuntimeNodes(MasterNode masterNode, boolean marker) {
         for (RuntimeNode runtimeNode : masterNode.getRuntimeNodes().values()) {
             if (marker) {
-                runtimeNode.setNodeCondition(NodeAction.START);
+                runtimeNode.setAction(NodeAction.START);
             } else {
-                runtimeNode.setNodeCondition(NodeAction.STOP);
+                runtimeNode.setAction(NodeAction.STOP);
             }
         }
     }

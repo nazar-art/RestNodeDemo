@@ -1,7 +1,7 @@
 package com.lelyak.edu.model;
 
 import com.lelyak.edu.database.DatabaseMockClass;
-import com.lelyak.edu.model.enums.NodeAction;
+import com.lelyak.edu.model.enums.ApplicationStatus;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -27,7 +27,7 @@ public class MasterNode {
 
     public MasterNode(String name, List<File> files) {
         this.name = name;
-        this.appStatus = NodeAction.START.getActionValue();
+        this.appStatus = ApplicationStatus.STARTED.getActionValue();
         this.files = files;
         resourceStats = new NodeStats(runtimeNodes);
     }
@@ -45,7 +45,7 @@ public class MasterNode {
         return appStatus;
     }
 
-    public void setAppStatus(NodeAction appStatus) {
+    public void setAppStatus(ApplicationStatus appStatus) {
         this.appStatus = appStatus.getActionValue();
     }
 

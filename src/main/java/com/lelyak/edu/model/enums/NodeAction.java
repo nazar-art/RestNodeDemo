@@ -1,7 +1,13 @@
 package com.lelyak.edu.model.enums;
 
+import org.apache.log4j.Logger;
+
 public enum NodeAction {
-    START("started"), STOP("stopped");
+
+    START("start"),
+    STOP("stop");
+
+    private static final Logger LOGGER = Logger.getLogger(NodeAction.class);
 
     private String actionValue;
 
@@ -13,17 +19,19 @@ public enum NodeAction {
         return actionValue;
     }
 
-    @Override
-    public String toString() {
-        return actionValue;
-    }
-
-    public NodeAction fromString(String actionName) {
+    public static NodeAction fromString(String actionName) {
+        LOGGER.info("HERE IS NODE ACTION: " + actionName);
         for (NodeAction nodeAction : NodeAction.values()) {
             if (nodeAction.getActionValue().equalsIgnoreCase(actionName)) {
                 return nodeAction;
             }
         }
-        throw new IllegalArgumentException("Invalid action name " + actionName + "for ManagementNodeAction");
+        throw new IllegalArgumentException("Invalid node action: " + actionName);
     }
+
+    @Override
+    public String toString() {
+        return actionValue;
+    }
+
 }

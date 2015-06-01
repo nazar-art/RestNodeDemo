@@ -1,7 +1,9 @@
 package com.lelyak.edu.resources;
 
 import com.lelyak.edu.model.MasterNode;
+import com.lelyak.edu.model.enums.NodeAction;
 import com.lelyak.edu.service.MasterNodeService;
+import org.json.JSONObject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -26,12 +28,19 @@ public class MasterNodeResource {
     }
 
     @PUT
-    @Path("/{masterNodeId}")
-    public MasterNode updateMasterNode(@PathParam("masterNodeId") long masterNodeId) {
+    @Path("/{masterNodeId}/action")
+    public MasterNode updateMasterNode(@PathParam("masterNodeId") long masterNodeId, String action) {
         MasterNode masterNode = masterNodeService.getMasterNode(masterNodeId);
-        masterNodeService.flipNodeActions(masterNode);
+        String actionString = processActionJson(action);
+        NodeAction nodeAction = NodeAction.fromString(actionString);
 
+        masterNodeService.flipNodeActions(masterNode, nodeAction);
         return masterNode;
+    }
+
+    private String processActionJson(String actionJson) {
+        JSONObject jsonObject = new JSONObject(actionJson);
+        return jsonObject.getString("action");
     }
 
     @Path("/{masterNodeId}/runtime")
