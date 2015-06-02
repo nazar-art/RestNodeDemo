@@ -47,7 +47,8 @@ public final class DatabaseMockClass {
     }
 
     public static Map<Long, RuntimeNode> getRuntimeNodes() {
-        Map<Long, RuntimeNode> runtimeNodes = masterNodes.get(MASTER_NODE_KEY).getRuntimeNodes();
+//        Map<Long, RuntimeNode> runtimeNodes = masterNodes.get(MASTER_NODE_KEY).getRuntimeNodes();
+        Map<Long, RuntimeNode> runtimeNodes = MasterNode.getRuntimeNodes();
         if (runtimeNodes == null) {
             Logger.error(RUNTIME_NODES_EXCEPTION);
             throw new RuntimeException(RUNTIME_NODES_EXCEPTION);
@@ -56,7 +57,7 @@ public final class DatabaseMockClass {
     }
 
     public static Map<Long, RuntimeNode> getRuntimeNodes(long nodeId) {
-        Map<Long, RuntimeNode> runtimeNodes = masterNodes.get(nodeId).getRuntimeNodes();
+        Map<Long, RuntimeNode> runtimeNodes = MasterNode.getRuntimeNodes();
         if (runtimeNodes == null) {
             Logger.error(RUNTIME_NODES_EXCEPTION);
             throw new RuntimeException(RUNTIME_NODES_EXCEPTION);
