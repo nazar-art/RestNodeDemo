@@ -1,7 +1,5 @@
 package com.lelyak.edu.model.enums;
 
-import com.lelyak.edu.utils.logger.Logger;
-
 public enum NodeAction {
 
     START("start"),
@@ -18,7 +16,7 @@ public enum NodeAction {
     }
 
     public static NodeAction fromString(String actionName) {
-        Logger.operation("HERE IS NODE ACTION INITIALIZATION: " + actionName);
+//        Logger.operation("HERE IS NODE ACTION INITIALIZATION: " + actionName);
 
         for (NodeAction nodeAction : NodeAction.values()) {
             if (nodeAction.getActionValue().equalsIgnoreCase(actionName)) {

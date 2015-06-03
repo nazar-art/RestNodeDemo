@@ -2,11 +2,13 @@ package com.lelyak.edu.resources;
 
 import com.lelyak.edu.model.MasterNode;
 import com.lelyak.edu.model.enums.NodeAction;
+import com.lelyak.edu.model.response.ActionResponse;
 import com.lelyak.edu.service.MasterNodeService;
 import org.json.JSONObject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/master")
@@ -29,13 +31,20 @@ public class MasterNodeResource {
 
     @PUT
     @Path("/{masterNodeId}/action")
-    public MasterNode updateMasterNode(@PathParam("masterNodeId") long masterNodeId, String action) {
+    public /*MasterNode*/ Response updateMasterNode(@PathParam("masterNodeId") long masterNodeId,
+                                                    String action) {
         MasterNode masterNode = masterNodeService.getMasterNode(masterNodeId);
         String actionString = processActionJson(action);
         NodeAction nodeAction = NodeAction.fromString(actionString);
 
         masterNodeService.flipNodeActions(masterNode, nodeAction);
-        return masterNode;
+
+        // todo create
+        ActionResponse actionResponse = new ActionResponse();
+        return Response
+                .status(Response.Status.OK)
+                .entity(actionResponse)
+                .build();
     }
 
     private String processActionJson(String actionJson) {

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite name="Master Node Application Test Suite">
 
-    <!--<listeners>
+    <listeners>
         <listener class-name="com.lelyak.edu.utils.logger.TestNgListener" />
-    </listeners>-->
+    </listeners>
 
-    <test name="">
+    <test name="Copy file for runtime nodes test">
         <classes>
-            <!--todo finish this test example-->
             <class name="com.lelyak.edu.RuntimeNodeTest" />
         </classes>
     </test>

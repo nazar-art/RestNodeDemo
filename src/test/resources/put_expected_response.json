@@ -1,0 +1,7 @@
+{
+    "action": "stop",
+    "status": 200,
+    "response": {
+        "message": "Stopping resources has triggered successfully"
+    }
+}

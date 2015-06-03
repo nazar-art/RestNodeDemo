@@ -7,7 +7,6 @@ import com.lelyak.edu.model.enums.NodeAction;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.File;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +34,7 @@ public class MasterNode {
     }
 
     public static NodeAction runtimeNodeAction() {
-        for (RuntimeNode node : runtimeNodes) {
+        for (RuntimeNode node : runtimeNodes.values()) {
             if (node.getAction() != NodeAction.START) {
                 return NodeAction.STOP;
             }
