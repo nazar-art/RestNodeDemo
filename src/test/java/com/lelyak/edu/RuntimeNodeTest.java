@@ -8,15 +8,13 @@ import org.testng.annotations.Test;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
 
 public class RuntimeNodeTest {
 
-    Client client;
-    WebTarget target;
+    private Client client;
+    private WebTarget target;
 
     @BeforeSuite(description = "initialization for client")
     public void setUp() throws Exception {
@@ -25,23 +23,27 @@ public class RuntimeNodeTest {
         target = client.target(getBaseUri());
     }
 
-    private URI getBaseUri() {
-        String uriTemplate = "http://localhost:8080/webapi/master/1";
-        return UriBuilder.fromUri(uriTemplate).build();
-    }
-
     @Test(description = "check GET response")
-    public void checkGetResponse() {
-        Logger.info(target.request().accept(MediaType.APPLICATION_JSON_TYPE).get().toString());
+    public void checkGetResponse() { // todo compare with expected response
+        String getResponse = target.request().get(String.class);
+        Logger.info(getResponse);
     }
 
     @Test(description = "check PUT response", dependsOnMethods = "checkGetResponse")
-    public void checkPutResponse() {
-        Logger.info(target.path("action")
-                .request().accept(MediaType.APPLICATION_JSON_TYPE)
-//                .put(PutAction.class, new PutAction("action", "stop"))
-                .get(Response.class)
-                .toString());
+    public void checkPutResponse() { // todo compare with expected response
+        Logger.info(
+                target.path("action")
+                        .queryParam("action", "stop")
+                        .request()
+                        /*.accept(MediaType.APPLICATION_JSON_TYPE)
+                        .put(PutAction.class, new PutAction("action", "stop"))
+                        .get(Response.class)*/
+                        .get(String.class));
+    }
+
+    private URI getBaseUri() {
+        String uriTemplate = "http://localhost:8080/webapi/master/1";
+        return UriBuilder.fromUri(uriTemplate).build();
     }
 
 
