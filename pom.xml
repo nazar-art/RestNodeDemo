@@ -47,6 +47,19 @@
             <version>1.7.12</version>
         </dependency>
 
+        <!--REPORTING-->
+        <dependency>
+            <groupId>org.uncommons</groupId>
+            <artifactId>reportng</artifactId>
+            <version>1.1.4</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.testng</groupId>
+                    <artifactId>testng</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!--UTILS-->
         <dependency>
             <groupId>org.json</groupId>
@@ -76,20 +89,33 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.18.1</version>
+
                 <configuration>
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
+
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
-                        <!--<properties>
-                            <property>
-                                <name>usedefaultlisteners</name>
-                                <value>false</value>
-                            </property>
-                            <property>
-                                <name>listener</name>
-                                <value>com.lelyak.edu.utils.logger.TestNgListener</value>
-                            </property>
-                        </properties>-->
                     </suiteXmlFiles>
+
+                    <properties>
+                        <property>
+                            <name>usedefaultlisteners</name>
+                            <value>false</value>
+                        </property>
+                        <property>
+                            <name>listener</name>
+                            <value>
+                                com.epam.cdatest.utils.logger.TestNGListener,org.uncommons.reportng.HTMLReporter,org.uncommons.reportng.JUnitXMLReporter
+                            </value>
+                        </property>
+                    </properties>
+
+                    <systemProperties>
+                        <org.uncommons.reportng.escape-output>false</org.uncommons.reportng.escape-output>
+                    </systemProperties>
+
+                    <workingDirectory>./</workingDirectory>
+                    <reportsDirectory>./report</reportsDirectory>
                 </configuration>
             </plugin>
 

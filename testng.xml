@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite name="Master Node Application Test Suite">
 
-    <listeners>
-        <listener class-name="com.lelyak.edu.utils.logger.TestNgListener" />
-    </listeners>
+    <!--if you just run this suite without Maven uncomment `listeners block` for logging-->
+    <!--<listeners>
+        <listener class-name="org.uncommons.reportng.HTMLReporter" />
+        <listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+        <listener class-name="com.epam.cdatest.utils.logger.TestNGListener" />
+    </listeners>-->
 
     <test name="Copy file for runtime nodes test">
         <classes>

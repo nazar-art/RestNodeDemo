@@ -29,15 +29,14 @@ public class RuntimeNodeTest {
         Logger.info(getResponse);
     }
 
-    @Test(description = "check PUT response", dependsOnMethods = "checkGetResponse")
+//    @Test(description = "check PUT response", dependsOnMethods = "checkGetResponse")
     public void checkPutResponse() { // todo compare with expected response
         Logger.info(
                 target.path("action")
                         .queryParam("action", "stop")
                         .request()
-                        /*.accept(MediaType.APPLICATION_JSON_TYPE)
-                        .put(PutAction.class, new PutAction("action", "stop"))
-                        .get(Response.class)*/
+                        /*.accept(MediaType.APPLICATION_JSON_TYPE)*/
+//                        .put(PutAction.class, new PutAction("action", "stop"))
                         .get(String.class));
     }
 
