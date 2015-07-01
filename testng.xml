@@ -5,7 +5,7 @@
     <!--<listeners>
         <listener class-name="org.uncommons.reportng.HTMLReporter" />
         <listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
-        <listener class-name="com.epam.cdatest.utils.logger.TestNGListener" />
+        <listener class-name="com.lelyak.edu.utils.logger.TestNgListener" />
     </listeners>-->
 
     <test name="Copy file for runtime nodes test">

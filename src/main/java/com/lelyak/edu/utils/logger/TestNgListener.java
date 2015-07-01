@@ -2,16 +2,11 @@ package com.lelyak.edu.utils.logger;
 
 import org.testng.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * @author Nazar_Lelyak
  */
 public class TestNgListener extends TestListenerAdapter implements IInvokedMethodListener, ISuiteListener {
-
-    private List<String> processedSuites = new ArrayList<>();
 
     /**
      * Test class
@@ -105,12 +100,6 @@ public class TestNgListener extends TestListenerAdapter implements IInvokedMetho
         return builder.toString();
     }
 
-    /**
-     * Get name and description of Test Method as
-     *
-     * @param result
-     * @return
-     */
     private String getMethodName(ITestResult result) {
         StringBuilder builder = new StringBuilder();
         builder.append(result.getTestClass().getRealClass().getSimpleName());
@@ -132,18 +121,13 @@ public class TestNgListener extends TestListenerAdapter implements IInvokedMetho
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.testng.ISuiteListener#onStart(org.testng.ISuite)
-     */
     @Override
     public void onStart(ISuite suite) {
-        // do nothing
+        Logger.info(buildMessage(Logger.PREFIX_TEST_SUITE_STARTED, suite.getName()));
     }
 
-    /* (non-Javadoc)
-     * @see org.testng.ISuiteListener#onFinish(org.testng.ISuite)
-     */
     @Override
     public void onFinish(ISuite suite) {
+        Logger.info(buildMessage(Logger.PREFIX_TEST_SUITE_FINISHED, suite.getName()));
     }
 }
