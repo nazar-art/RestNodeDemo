@@ -16,3 +16,6 @@ log/
 target/
 
 .tern-project
+
+# Other
+report/

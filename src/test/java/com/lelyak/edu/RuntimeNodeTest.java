@@ -26,7 +26,7 @@ public class RuntimeNodeTest {
     public void setUp() throws Exception {
         ClientConfig config = new ClientConfig();
         Client client = ClientBuilder.newClient(config);
-        target = client.target(getBaseUri());
+        target = client.target(getMasterNodeUri());
         mapper = new ObjectMapper();
     }
 
@@ -34,14 +34,25 @@ public class RuntimeNodeTest {
     public void checkGetResponse() throws IOException {
         String getResponse = target.request().get(String.class);
 
-        JsonNode actualResponse = mapper.readTree(getResponse);
-        JsonNode expectedResponse = mapper.readTree(IOUtils.readFileIntoString(FileLocations.EXPECTED_GET_RESPONSE.getFileLocation()));
+        JsonNode actualGetResponse = mapper.readTree(getResponse);
+        JsonNode expectedGetResponse = mapper.readTree(
+                IOUtils.readFileIntoString(
+                        FileLocations.EXPECTED_GET_RESPONSE.getFileLocation()));
 
-        Assert.assertEquals(actualResponse, expectedResponse,
+        Logger.info("EXPECTED RESPONSE: " + expectedGetResponse);
+        Logger.info("ACTUAL RESPONSE: " + actualGetResponse);
+
+        Assert.assertEquals(actualGetResponse, expectedGetResponse,
                 "actual GET response isn't equal with expected");
+        // todo sent PUT to - http://localhost:8080/webapi/master/1/action + with body - {"action":"stop"}
     }
 
-    @Test(description = "check PUT response", dependsOnMethods = "checkGetResponse")
+    private URI getMasterNodeUri() {
+        String uriTemplate = "http://localhost:8080/webapi/master/1";
+        return UriBuilder.fromUri(uriTemplate).build();
+    }
+
+    //    @Test(description = "check PUT response", dependsOnMethods = "checkGetResponse")
     public void checkPutResponse() { // todo compare with expected response
         Logger.info(
                 target.path("action")
@@ -50,10 +61,5 @@ public class RuntimeNodeTest {
                         /*.accept(MediaType.APPLICATION_JSON_TYPE)*/
 //                        .put(PutAction.class, new PutAction("action", "stop"))
                         .get(String.class));
-    }
-
-    private URI getBaseUri() {
-        String uriTemplate = "http://localhost:8080/webapi/master/1";
-        return UriBuilder.fromUri(uriTemplate).build();
     }
 }

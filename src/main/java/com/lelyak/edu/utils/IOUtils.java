@@ -1,6 +1,6 @@
 package com.lelyak.edu.utils;
 
-import org.apache.log4j.Logger;
+import com.lelyak.edu.utils.logger.Logger;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -9,9 +9,6 @@ import java.nio.file.LinkOption;
 import java.nio.file.StandardCopyOption;
 
 public final class IOUtils {
-
-    private final static Logger logger = Logger.getLogger(IOUtils.class);
-
     public static final Charset UTF8 = Charset.forName("UTF-8");
 
     private IOUtils() {
@@ -24,7 +21,7 @@ public final class IOUtils {
         try {
             Files.copy(from.toPath(), to.toPath(), StandardCopyOption.REPLACE_EXISTING, LinkOption.NOFOLLOW_LINKS);
         } catch (IOException e) {
-            logger.error("Copy failed - fromPath=" + fromPath + ", toPath=" + toPath, new RuntimeException(e));
+            Logger.error("Copy failed - fromPath=" + fromPath + ", toPath=" + toPath, new RuntimeException(e));
         }
     }
 
@@ -32,7 +29,7 @@ public final class IOUtils {
         try (BufferedWriter writer = getWriter(filePath, false)) {
             writer.write(content);
         } catch (Exception e) {
-            logger.error(StringUtils.appendStrings("saveFile throw Exception=%1$s"
+            Logger.error(StringUtils.appendStrings("saveFile throw Exception=%1$s"
                     + StringUtils.NEW_LINE + " with file path=%2$s with file content=%3$s", e.getMessage(), filePath, content));
         }
     }
@@ -46,18 +43,17 @@ public final class IOUtils {
     }
 
     public static String readFileIntoString(String filePath) throws IOException {
-        BufferedReader reader = getReader(filePath);
-        String line = reader.readLine();
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder result = new StringBuilder();
+        try (BufferedReader reader = getReader(filePath)) {
+            String line = reader.readLine();
 
-        while (line != null) {
-            buffer.append(line);
-            buffer.append(System.lineSeparator());
-            line = reader.readLine();
+            while (line != null) {
+                result.append(line);
+                result.append(System.lineSeparator());
+                line = reader.readLine();
+            }
         }
-
-        reader.close();
-        return buffer.toString();
+        return result.toString();
     }
 
     public static String getAbsoluteFilePath(String partPath) {
