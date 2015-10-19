@@ -16,22 +16,13 @@ public final class DatabaseMockClass {
     }
 
     public static final int RUNTIME_NODE_COUNT = 33;
+    public static final long MASTER_NODE_KEY = 1L;
 
     private static Map<Long, MasterNode> masterNodes = new HashMap<>();
 
-    public static final long MASTER_NODE_KEY = 1L;
-    public static final String RUNTIME_NODES_EXCEPTION = "runtime nodes are missed for first master node - at getRuntimeNodes()";
     public static final String MANAGE_NODE_FIRST_FILE_PATH = "src/main/resources/nodes/manage/first_manage_node_file.txt";
 
-    static {
-        // hard coded DB mock
-        Logger.operation("start master node initialization");
-        List<File> runNodesList = Arrays.asList(new File(MANAGE_NODE_FIRST_FILE_PATH));
-        MasterNode firstMasterNode = new MasterNode("#1 master node", runNodesList);
-        //
-        masterNodes.put(MASTER_NODE_KEY, firstMasterNode);
-        Logger.operation("first master node created");
-    }
+    public static final String RUNTIME_NODES_EXCEPTION = "runtime nodes are missed for first master node - at getRuntimeNodes()";
 
     public static Map<Long, RuntimeNode> runtimeNodesMock() {
         Map<Long, RuntimeNode> runtimeNodeMap = new HashMap<>();
@@ -43,6 +34,16 @@ public final class DatabaseMockClass {
     }
 
     public static Map<Long, MasterNode> getMasterNodes() {
+        if (masterNodes.isEmpty()) {
+            // hard coded DB mock
+            Logger.operation("start master node initialization");
+            List<File> runNodesList = Arrays.asList(new File(MANAGE_NODE_FIRST_FILE_PATH));
+            MasterNode firstMasterNode = new MasterNode("#1 master node", runNodesList);
+            //
+            masterNodes.put(MASTER_NODE_KEY, firstMasterNode);
+            Logger.operation("first master node created");
+        }
+
         return masterNodes;
     }
 
@@ -56,12 +57,12 @@ public final class DatabaseMockClass {
         return runtimeNodes;
     }
 
-    public static Map<Long, RuntimeNode> getRuntimeNodes(long nodeId) {
+    /*public static Map<Long, RuntimeNode> getRuntimeNodes(long nodeId) {
         Map<Long, RuntimeNode> runtimeNodes = MasterNode.getRuntimeNodes();
         if (runtimeNodes == null) {
             Logger.error(RUNTIME_NODES_EXCEPTION);
             throw new RuntimeException(RUNTIME_NODES_EXCEPTION);
         }
         return runtimeNodes;
-    }
+    }*/
 }

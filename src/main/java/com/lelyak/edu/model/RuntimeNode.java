@@ -10,8 +10,7 @@ public class RuntimeNode {
 
     private long id;
     private String name;
-//    private NodeAction action = NodeAction.START;
-    private String action = NodeAction.START.getActionValue();
+    private String action;
     private List<File> files;
 
     public RuntimeNode() {
@@ -20,6 +19,7 @@ public class RuntimeNode {
     public RuntimeNode(long id, String name) {
         this.id = id;
         this.name = name;
+        action = NodeAction.START.getActionValue();
     }
 
     @XmlTransient
