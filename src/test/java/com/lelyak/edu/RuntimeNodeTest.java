@@ -32,7 +32,7 @@ public class RuntimeNodeTest {
     private ObjectMapper mapper;
 
     @BeforeSuite(description = "initialization for client")
-    public void setUp() throws Exception {
+    public void setUp() {
         ClientConfig config = new ClientConfig();
         client = ClientBuilder.newClient(config);
         target = client.target(getMasterNodeUri(false));

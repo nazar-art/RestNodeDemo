@@ -1,15 +1,15 @@
 package com.lelyak.edu.utils;
 
+import lombok.experimental.UtilityClass;
+
 import java.util.Formatter;
 
-public final class StringUtils {
+@UtilityClass
+public class StringUtils {
 
-    public static final String NEW_LINE = System.getProperty("line.separator");
+    public final String NEW_LINE = System.getProperty("line.separator");
 
-    private StringUtils() {
-    }
-
-    public static String appendStrings(String message, Object... params) {
+    public String appendStrings(String message, Object... params) {
         try (Formatter format = new Formatter()) {
             return format.format(message, params).toString();
         }

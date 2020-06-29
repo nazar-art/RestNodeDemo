@@ -1,20 +1,19 @@
 package com.lelyak.edu.model;
 
 import com.lelyak.edu.model.enums.NodeAction;
+import lombok.NoArgsConstructor;
 
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.File;
 import java.util.List;
 
+@NoArgsConstructor
 public class RuntimeNode {
 
     private long id;
     private String name;
     private String action;
     private List<File> files;
-
-    public RuntimeNode() {
-    }
 
     public RuntimeNode(long id, String name) {
         this.id = id;

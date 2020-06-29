@@ -1,20 +1,21 @@
 package com.lelyak.edu.utils;
 
 import com.lelyak.edu.utils.logger.Logger;
+import lombok.experimental.UtilityClass;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.StandardCopyOption;
 
-public final class IOUtils {
-    public static final Charset UTF8 = Charset.forName("UTF-8");
+@UtilityClass
+public class IOUtils {
 
-    private IOUtils() {
-    }
+    public final Charset UTF8 = StandardCharsets.UTF_8;
 
-    public static void copyFile(String fromPath, String toPath) {
+    public void copyFile(String fromPath, String toPath) {
         File from = new File(fromPath);
         File to = new File(toPath);
 
@@ -25,7 +26,7 @@ public final class IOUtils {
         }
     }
 
-    public static void saveFile(String filePath, String content) {
+    public void saveFile(String filePath, String content) {
         try (BufferedWriter writer = getWriter(filePath, false)) {
             writer.write(content);
         } catch (Exception e) {
@@ -34,15 +35,15 @@ public final class IOUtils {
         }
     }
 
-    public static BufferedReader getReader(String filePath) throws IOException {
+    public BufferedReader getReader(String filePath) throws IOException {
         return new BufferedReader(new InputStreamReader(new FileInputStream(filePath), UTF8));
     }
 
-    public static BufferedWriter getWriter(String filePath, boolean append) throws IOException {
+    public BufferedWriter getWriter(String filePath, boolean append) throws IOException {
         return new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath, append), UTF8));
     }
 
-    public static String readFileIntoString(String filePath) throws IOException {
+    public String readFileIntoString(String filePath) throws IOException {
         StringBuilder result = new StringBuilder();
         try (BufferedReader reader = getReader(filePath)) {
             String line = reader.readLine();
@@ -56,7 +57,7 @@ public final class IOUtils {
         return result.toString();
     }
 
-    public static String getAbsoluteFilePath(String partPath) {
+    public String getAbsoluteFilePath(String partPath) {
         return new File(partPath).getAbsolutePath();
     }
 }

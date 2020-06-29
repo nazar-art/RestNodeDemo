@@ -3,6 +3,9 @@ package com.lelyak.edu.model;
 import com.lelyak.edu.database.DatabaseMockClass;
 import com.lelyak.edu.model.enums.ApplicationStatus;
 import com.lelyak.edu.model.enums.NodeAction;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -10,21 +13,21 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+@Getter
+@Setter
 @XmlRootElement
+@NoArgsConstructor
 public class MasterNode {
 
-    private String name;
-
+    @XmlTransient
     private static Map<Long, RuntimeNode> runtimeNodes = DatabaseMockClass.runtimeNodesMock();
 
+    @XmlTransient
+    private String name;
     private String appStatus;
-
     private NodeStats resourceStats;
-
+    @XmlTransient
     private List<File> files;
-
-    public MasterNode() {
-    }
 
     public MasterNode(String name, List<File> files) {
         this.name = name;
@@ -42,7 +45,11 @@ public class MasterNode {
         return NodeAction.START;
     }
 
-    @XmlTransient
+    public static Map<Long, RuntimeNode> getRuntimeNodes() {
+        return runtimeNodes;
+    }
+
+    /*@XmlTransient
     public String getName() {
         return name;
     }
@@ -87,5 +94,5 @@ public class MasterNode {
 
     public void setResourceStats(NodeStats resourceStats) {
         this.resourceStats = resourceStats;
-    }
+    }*/
 }

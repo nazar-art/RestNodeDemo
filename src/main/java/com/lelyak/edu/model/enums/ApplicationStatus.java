@@ -1,19 +1,18 @@
 package com.lelyak.edu.model.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
+
+@Getter
+@ToString
+@AllArgsConstructor
 public enum ApplicationStatus {
 
     STARTED("started"),
     STOPPED("stopped");
 
-    private String actionValue;
-
-    private ApplicationStatus(String name) {
-        actionValue = name;
-    }
-
-    public String getActionValue() {
-        return actionValue;
-    }
+    private final String actionValue;
 
     public static ApplicationStatus fromString(String statusName) {
         for (ApplicationStatus applicationStatus : ApplicationStatus.values()) {
@@ -24,8 +23,8 @@ public enum ApplicationStatus {
         throw new IllegalArgumentException("Invalid app status name " + statusName);
     }
 
-    @Override
-    public String toString() {
-        return actionValue;
-    }
+//    @Override
+//    public String toString() {
+//        return actionValue;
+//    }
 }

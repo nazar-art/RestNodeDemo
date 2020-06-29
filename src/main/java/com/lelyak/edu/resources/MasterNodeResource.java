@@ -4,6 +4,7 @@ import com.lelyak.edu.model.MasterNode;
 import com.lelyak.edu.model.enums.NodeAction;
 import com.lelyak.edu.model.response.ActionResponse;
 import com.lelyak.edu.service.MasterNodeService;
+import lombok.AllArgsConstructor;
 import org.json.JSONObject;
 
 import javax.ws.rs.*;
@@ -16,7 +17,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class MasterNodeResource {
 
-    private MasterNodeService masterNodeService = new MasterNodeService();
+    private final MasterNodeService masterNodeService = new MasterNodeService();
 
     @GET
     public List<MasterNode> getAllMasterNodes() {

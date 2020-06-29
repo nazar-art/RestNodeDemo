@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class RuntimeNodeService {
 
-    private Map<Long, RuntimeNode> runtimeNodes = DatabaseMockClass.getRuntimeNodes();
+    private final Map<Long, RuntimeNode> runtimeNodes = DatabaseMockClass.getRuntimeNodes();
 
     public List<RuntimeNode> getAllRuntimeNodes() {
         return new ArrayList<>(runtimeNodes.values());

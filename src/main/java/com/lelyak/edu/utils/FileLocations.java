@@ -12,7 +12,7 @@ public enum FileLocations {
      */
     public static final String NODES_RESOURCE_PATH = "src/main/resources/nodes/";
 
-    private String fileLocation;
+    private final String fileLocation;
 
     FileLocations(String fileLocation) {
         this.fileLocation = fileLocation;

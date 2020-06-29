@@ -6,15 +6,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.lelyak.edu</groupId>
-    <artifactId>master-node</artifactId>
+    <artifactId>master-node-demo</artifactId>
     <packaging>war</packaging>
 
     <version>0.0.1</version>
     <name>RestNodeDemo</name>
 
     <properties>
-        <jersey.version>2.17</jersey.version>
         <java.version>1.7</java.version>
+        <jersey.version>2.17</jersey.version>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -79,6 +80,11 @@
             <version>1.9.13</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -94,7 +100,7 @@
     </dependencyManagement>
 
     <build>
-        <finalName>RestNodeDemo</finalName>
+        <finalName>master-node-demo</finalName>
 
         <plugins>
             <plugin>
@@ -158,7 +164,7 @@
                 <version>2.4</version>
                 <configuration>
                     <packagingExcludes>WEB-INF/web.xml</packagingExcludes>
-                    <warName>MasterNodeDemo</warName>
+                    <warName>master-node-demo</warName>
                 </configuration>
             </plugin>
         </plugins>

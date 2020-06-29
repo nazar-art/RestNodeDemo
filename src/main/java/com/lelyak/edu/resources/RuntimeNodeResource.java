@@ -13,7 +13,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class RuntimeNodeResource {
 
-    private RuntimeNodeService runtimeNodeService = new RuntimeNodeService();
+    private final RuntimeNodeService runtimeNodeService = new RuntimeNodeService();
 
     @GET
     public List<RuntimeNode> getAllRuntimeNodes(@PathParam("masterNodeId") long masterNodeId) {
